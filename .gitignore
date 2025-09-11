@@ -46,3 +46,4 @@ app.*.map.json
 
 # Directorios excluidos
 assets/videos/
+assets/videos/*.mp4
