@@ -42,11 +42,31 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
     return FutureBuilder(
       future: controller.initialize(),
       builder: (context, snapshot) {
-        return Center(
-          child: CircularProgressIndicator(
-            strokeWidth: 2)
+        if (snapshot.connectionState != ConnectionState.done) {
+          CircularProgressIndicator(strokeWidth: 2);
+        }
+
+        return AspectRatio(
+          aspectRatio: controller.value.aspectRatio,
+          child: Stack(
+            children: [
+              VideoPlayer(controller),
+
+              //Gradiente
+
+              //Texto acompaña el video
+              _VideoCaption(),
+            ],
+          ),
         );
       },
     );
+  }
+}
+
+class _VideoCaption extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text('Hola');
   }
 }
