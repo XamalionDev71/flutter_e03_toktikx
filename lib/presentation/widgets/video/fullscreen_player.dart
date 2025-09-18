@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_e03_toktik/presentation/widgets/video/video_background.dart';
 import 'package:video_player/video_player.dart';
 
 class FullscreenPlayer extends StatefulWidget {
@@ -46,17 +47,32 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
           CircularProgressIndicator(strokeWidth: 2);
         }
 
-        return AspectRatio(
-          aspectRatio: controller.value.aspectRatio,
-          child: Stack(
-            children: [
-              VideoPlayer(controller),
+        return GestureDetector(
+          onTap: () {
+            if (controller.value.isPlaying) {
+              controller.pause();
+              return;
+            }
+            else
+              controller.play();
+          },
+          child: AspectRatio(
+            aspectRatio: controller.value.aspectRatio,
+            child: Stack(
+              children: [
+                VideoPlayer(controller),
 
-              //Gradiente
+                //Gradiente
+                VideoBackground(stops: [0.8, 1.0]),
 
-              //Texto acompaña el video
-              _VideoCaption(),
-            ],
+                //Texto acompaña el video
+                Positioned(
+                  bottom: 50,
+                  left: 20,
+                  child: _VideoCaption(caption: widget.caption),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -65,8 +81,18 @@ class _FullscreenPlayerState extends State<FullscreenPlayer> {
 }
 
 class _VideoCaption extends StatelessWidget {
+  final String caption;
+
+  const _VideoCaption({required this.caption});
+
   @override
   Widget build(BuildContext context) {
-    return Text('Hola');
+    final size = MediaQuery.of(context).size;
+    final titleStyle = Theme.of(context).textTheme.titleLarge;
+
+    return SizedBox(
+      width: size.width * 0.6,
+      child: Text(caption, maxLines: 2, style: titleStyle),
+    );
   }
 }
