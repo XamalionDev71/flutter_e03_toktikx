@@ -1,6 +1,6 @@
 import 'package:flutter_e03_toktik/domain/entities/video_post.dart';
 
-abstract class VideoPostsDataSource {
+abstract class VideoPostsRepository {
   Future<List<VideoPost>> getFavoriteVideosByUser(String userID);
 
   Future<List<VideoPost>> getTrendingVideoByPage(int page);
